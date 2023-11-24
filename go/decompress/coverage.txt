@@ -1,0 +1,13 @@
+mode: atomic
+github.com/vagnerclementino/algorithm/go/decompress/decompress.go:7.34,10.30 3 7
+github.com/vagnerclementino/algorithm/go/decompress/decompress.go:10.30,11.24 1 24
+github.com/vagnerclementino/algorithm/go/decompress/decompress.go:11.24,13.4 1 4
+github.com/vagnerclementino/algorithm/go/decompress/decompress.go:14.3,14.24 1 24
+github.com/vagnerclementino/algorithm/go/decompress/decompress.go:14.24,17.4 2 4
+github.com/vagnerclementino/algorithm/go/decompress/decompress.go:19.2,19.10 1 3
+github.com/vagnerclementino/algorithm/go/decompress/decompress.go:23.75,24.61 1 4
+github.com/vagnerclementino/algorithm/go/decompress/decompress.go:24.61,26.26 2 4
+github.com/vagnerclementino/algorithm/go/decompress/decompress.go:26.26,28.4 1 14
+github.com/vagnerclementino/algorithm/go/decompress/decompress.go:29.3,29.23 1 4
+github.com/vagnerclementino/algorithm/go/decompress/decompress.go:31.2,31.10 1 0
+github.com/vagnerclementino/algorithm/go/decompress/main.go:3.14,5.2 0 0
