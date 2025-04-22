@@ -20,7 +20,9 @@ func TestTwoSum(t *testing.T) {
 	}
 
 	for _, tt := range tests {
+		tt := tt // capture range variable
 		t.Run("", func(t *testing.T) {
+			t.Parallel()
 			got := twosum.Calculate(tt.nums, tt.target)
 			if !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("twoSum(%v, %d) = %v; want %v", tt.nums, tt.target, got, tt.want)
