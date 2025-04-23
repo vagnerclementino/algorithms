@@ -22,11 +22,12 @@ func (s *stack[T]) Pop() T {
 	return r
 }
 
-func (s *stack[T]) Peek() *T {
+func (s *stack[T]) Peek() (T, bool) {
 	if len(s.data) == 0 {
-		return nil
+		var zero T
+		return zero, false
 	}
-	return &s.data[len(s.data)-1]
+	return s.data[len(s.data)-1], true
 }
 
 func (s *stack[T]) Size() int {
@@ -35,22 +36,15 @@ func (s *stack[T]) Size() int {
 
 func isOpenPar(r rune) bool {
 	switch r {
-	case '{':
-		return true
-	case '(':
-		return true
-	case '[':
+	case '{', '(', '[':
 		return true
 	default:
 		return false
 	}
 }
 
-func getClosePar(r *rune) rune {
-	if r == nil {
-		return '*'
-	}
-	switch *r {
+func getClosePar(r rune) rune {
+	switch r {
 	case '{':
 		return '}'
 	case '(':
@@ -61,17 +55,23 @@ func getClosePar(r *rune) rune {
 		return '*'
 	}
 }
+
 func isValid(s string) bool {
 	if len(s) == 0 {
 		return true
 	} else if len(s) == 1 {
 		return false
 	}
+
 	stack := NewStack[rune]()
 	for _, r := range s {
 		if isOpenPar(r) {
 			stack.Push(r)
-		} else if r == getClosePar(stack.Peek()) {
+		} else {
+			top, ok := stack.Peek()
+			if !ok || r != getClosePar(top) {
+				return false
+			}
 			stack.Pop()
 		}
 	}
@@ -79,33 +79,21 @@ func isValid(s string) bool {
 }
 
 func main() {
-	inputs := []string{
-		"()",         // Valid
-		"()[]{}",     // Valid
-		"(]",         // Invalid
-		"([)]",       // Invalid
-		"{[]}",       // Valid
-		"(",          // Invalid
-		")",          // Invalid
-		"({})",       // Valid
-		"({[()]})",   // Valid
-		"{[}]",       // Invalid
-		"",           // Valid (Empty string)
-		"{}[]",       // Valid
-		"[][]{{}}",   // Valid
-		"((()))",     // Valid
-		"{[()()]}",   // Valid
-		"{[(])}",     // Invalid
-		"[({})](())", // Valid
-		"[",          // Invalid
-		"]",          // Invalid
+	// Test cases
+	tests := []string{
+		"()",     // true
+		"()[]{}", // true
+		"(]",     // false
+		"([)]",   // false
+		"{[]}",   // true
+		"(",      // false
+		")",      // false
+		"([]{})", // true
+		"([{}])", // true
+		"{[}]",   // false
 	}
-	for _, input := range inputs {
-		if isValid(input) {
-			fmt.Println("Valid")
-		} else {
-			fmt.Println("Invalid")
-		}
 
+	for _, test := range tests {
+		fmt.Printf("Input: %q, Is Valid: %v\n", test, isValid(test))
 	}
 }
