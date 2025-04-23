@@ -2,34 +2,34 @@ package main
 
 import "fmt"
 
-type stack struct {
-	data []rune
+type stack[T any] struct {
+	data []T
 }
 
-func NewStack() *stack {
-	return &stack{
-		data: []rune{},
+func NewStack[T any]() *stack[T] {
+	return &stack[T]{
+		data: []T{},
 	}
 }
 
-func (s *stack) Push(r rune) {
+func (s *stack[T]) Push(r T) {
 	s.data = append(s.data, r)
 }
 
-func (s *stack) Pop() rune {
+func (s *stack[T]) Pop() T {
 	r := s.data[len(s.data)-1]
 	s.data = s.data[:len(s.data)-1]
 	return r
 }
 
-func (s *stack) Peek() rune {
+func (s *stack[T]) Peek() *T {
 	if len(s.data) == 0 {
-		return '*'
+		return nil
 	}
-	return s.data[len(s.data)-1]
+	return &s.data[len(s.data)-1]
 }
 
-func (s *stack) Size() int {
+func (s *stack[T]) Size() int {
 	return len(s.data)
 }
 
@@ -46,8 +46,11 @@ func isOpenPar(r rune) bool {
 	}
 }
 
-func getClosePar(r rune) rune {
-	switch r {
+func getClosePar(r *rune) rune {
+	if r == nil {
+		return '*'
+	}
+	switch *r {
 	case '{':
 		return '}'
 	case '(':
@@ -64,7 +67,7 @@ func isValid(s string) bool {
 	} else if len(s) == 1 {
 		return false
 	}
-	stack := NewStack()
+	stack := NewStack[rune]()
 	for _, r := range s {
 		if isOpenPar(r) {
 			stack.Push(r)
