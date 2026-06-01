@@ -37,7 +37,7 @@ func (ll *LinkedList) String() string {
 		return "(nil)"
 	}
 	var output string
-	for node := ll.Head; node.Next != nil; node = node.Next {
+	for node := ll.Head; node != nil; node = node.Next {
 		output += fmt.Sprintf(" %d ->", node.Value)
 	}
 	output += " (nil)"
