@@ -3,17 +3,15 @@ package ds
 import "fmt"
 
 type Set struct {
-	values map[int]bool
+	values map[int]struct{}
 }
 
 func NewSet() *Set {
-	return &Set{values: map[int]bool{}}
+	return &Set{values: map[int]struct{}{}}
 }
 
 func (s *Set) Add(item int) {
-	if _, ok := s.values[item]; !ok {
-		s.values[item] = true
-	}
+	s.values[item] = struct{}{}
 }
 
 func (s *Set) Delete(item int) {
@@ -21,8 +19,11 @@ func (s *Set) Delete(item int) {
 }
 
 func (s *Set) Contains(item int) bool {
-	_, found := s.values[item]
-	return found
+	if _, ok := s.values[item]; ok {
+		return true
+	} else {
+		return false
+	}
 }
 
 func (s *Set) Intersect(other *Set) *Set {
